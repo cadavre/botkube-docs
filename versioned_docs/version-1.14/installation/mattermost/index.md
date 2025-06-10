@@ -19,7 +19,7 @@ Follow the steps below to install Botkube in your Mattermost instance.
 
 1. Follow the [Mattermost instructions](https://developers.mattermost.com/integrate/reference/bot-accounts/) for creating a bot account. When creating the bot account, use the following details:
 
-   - Username — `Botkube`
+   - Username — `botkube`
 
      :::note
      You can also use a custom username for your bot. Just remember that you'll need to provide this username during a later step of the Botkube installation.
@@ -29,16 +29,16 @@ Follow the steps below to install Botkube in your Mattermost instance.
 
    - Icon — You can download the Botkube icon from [this link](https://github.com/kubeshop/botkube/blob/main/branding/logos/botkube-black-192x192.png).
 
-2. Export the bot name as an environment variable:
+2. Export the bot username as an environment variable:
 
    ```bash
-   export MATTERMOST_BOT_NAME="{bot_name}"
+   export MATTERMOST_BOT_NAME="{bot_username}"
    ```
 
 3. Also, export the bot's token as an environment variable:
 
    ```bash
-   export MATTERMOST_TOKEN="{token}"
+   export MATTERMOST_TOKEN="{bot_token}"
    ```
 
 ### Add Botkube to a channel
@@ -50,8 +50,12 @@ Make sure that the newly created bot account is added to your Mattermost team by
 Next, invite the Botkube bot into the specific channel where you want to receive notifications. Export the channel name as an environment variable:
 
 ```bash
-export MATTERMOST_CHANNEL="{channel_name}"
+export MATTERMOST_CHANNEL="{channel-slug}"
 ```
+
+:::note
+Use channel slug name here. You can find it in URL, after `channels/` part.
+:::
 
 ## Install Botkube in Kubernetes cluster
 
@@ -59,8 +63,8 @@ To deploy Botkube agent in your cluster, run:
 
 ```bash
 export MATTERMOST_SERVER_URL={mattermost_server_url}
-export MATTERMOST_TEAM={mattermost_team_name}
-export CLUSTER_NAME={cluster_name}
+export MATTERMOST_TEAM="{mattermost_team_name}"
+export CLUSTER_NAME="{cluster_name}"
 export ALLOW_KUBECTL={allow_kubectl}
 
 botkube install --version v1.14.0 \
@@ -82,7 +86,7 @@ where:
 - **MATTERMOST_CHANNEL** is the Channel name where Botkube is added and used for communication,
 - **MATTERMOST_BOT_NAME** is the Mattermost bot username (usually it is `Botkube`),
 - **CLUSTER_NAME** is the cluster name set in the incoming messages,
-- **ALLOW_KUBECTL** set true to allow `kubectl` command execution by Botkube on the cluster.
+- **ALLOW_KUBECTL** set `true` to allow `kubectl` command execution by Botkube on the cluster.
 
 Configuration syntax is explained [here](../../self-hosted-configuration).
 All possible installation parameters are documented [here](../../self-hosted-configuration/helm-chart-parameters).
